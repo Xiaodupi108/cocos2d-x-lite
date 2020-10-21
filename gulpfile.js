@@ -139,7 +139,7 @@ gulp.task('update', function (cb) {
 
 gulp.task('init', function(cb) {
     execSync('python download-deps.py --remove-download no');
-    execSync('git submodule update --init');
+    // execSync('git submodule update --init');
     execSync('python download-bin.py --remove-download no', './tools/cocos2d-console');
     cb();
 });

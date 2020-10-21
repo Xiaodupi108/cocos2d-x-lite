@@ -169,8 +169,10 @@ class CocosZipInstaller(object):
         
         mirror_repo_url = "http://gitlab.cocos.net:8929/publics/%s/-/archive/%s/%s-%s.zip" % (self._repo_name, self._current_version, self._repo_name, self._current_version)
         if mirror is None:
+            print("mirror is None")
             self._url = select_fastest_url([self._url, mirror_repo_url])
         elif mirror == "gitlab":
+            print("mirror == gitlab")
             self._url = mirror_repo_url
         
         try:
@@ -445,7 +447,7 @@ def main():
     print("=======================================================")
     print("==> Prepare to download external libraries!")
     external_path = os.path.join(workpath, 'external')
-    installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version", mirror)
+    installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version", "github")
     installer.run(workpath, external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
 # -------------- main --------------
