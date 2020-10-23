@@ -63,6 +63,7 @@ static void setAttachmentVertices(RegionAttachment* attachment) {
         vertices[i].texCoord.u = attachment->getUVs()[ii];
         vertices[i].texCoord.v = attachment->getUVs()[ii + 1];
     }
+    attachment->rotate = region->rotate;
     attachment->setRendererObject(attachmentVertices, deleteAttachmentVertices);    
 }
 
@@ -75,6 +76,7 @@ static void setAttachmentVertices(MeshAttachment* attachment) {
         vertices[i].texCoord.u = attachment->getUVs()[ii];
         vertices[i].texCoord.v = attachment->getUVs()[ii + 1];
     }
+    attachment->rotate = region->rotate;
     attachment->setRendererObject(attachmentVertices, deleteAttachmentVertices);
 }
 

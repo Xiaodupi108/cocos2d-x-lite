@@ -34,6 +34,9 @@
 #include <spine/MeshAttachment.h>
 #include <spine/HasRendererObject.h>
 
+#include "spine-creator-support/AttachmentVertices.h"
+#include <spine/Atlas.h>
+
 using namespace spine;
 
 RTTI_IMPL(MeshAttachment, VertexAttachment)
@@ -57,7 +60,9 @@ MeshAttachment::MeshAttachment(const String &name) : VertexAttachment(name), Has
 	_hullLength(0),
 	_regionRotate(false),
 	_regionDegrees(0)
-{}
+{
+    isOrigin = true;
+}
 
 MeshAttachment::~MeshAttachment() {}
 
@@ -346,4 +351,74 @@ MeshAttachment* MeshAttachment::newLinkedMesh() {
 	copy->setParentMesh(_parentMesh ? _parentMesh : this);
 	copy->updateUVs();
 	return copy;
+}
+
+void MeshAttachment::updateTexture(cocos2d::middleware::Texture2D* texture) {
+    AttachmentVertices* attachmentVertices = (AttachmentVertices*)getRendererObject();
+    if (isOrigin) {
+        orginTexture = attachmentVertices->_texture;
+        originUvs = getUVs();
+    }
+    
+    if (rotate && isOrigin) {
+       _regionDegrees = _regionDegrees - 90;
+       _width = texture->getPixelsHigh();
+       _height = texture->getPixelsWide();
+    } else {
+       _width = texture->getPixelsWide();
+       _height = texture->getPixelsHigh();
+    }
+    
+    attachmentVertices->_texture->release();
+    attachmentVertices->_texture = texture;
+    attachmentVertices->_texture->retain();
+    
+    updateUVs();
+    cocos2d::middleware::V2F_T2F_C4B* vertices = attachmentVertices->_triangles->verts;
+    GLfloat maxU = 0;
+    GLfloat maxV = 0;
+    GLfloat minU = 2;
+    GLfloat minV = 2;
+    for (size_t i = 0, ii = 0, nn = getWorldVerticesLength(); ii < nn; ++i, ii += 2) {
+        GLfloat u = getUVs()[ii];
+        GLfloat v = getUVs()[ii + 1];
+        if (u >= maxU) maxU = u;
+        if (v >= maxV) maxV = v;
+        if (u <= minU) minU = u;
+        if (v <= minV) minV = v;
+    }
+    
+    for (size_t i = 0, ii = 0, nn = getWorldVerticesLength(); ii < nn; ++i, ii += 2) {
+        GLfloat u = getUVs()[ii];
+        GLfloat v = getUVs()[ii + 1];
+        vertices[i].texCoord.u = (u - minU)/(maxU - minU);
+        vertices[i].texCoord.v = (v - minV)/(maxV - minV);
+    }
+    
+    isOrigin = false;
+}
+
+void MeshAttachment::resetTexture() {
+    //如果没有换装 直接返回
+    if (isOrigin) return;
+    cocos2d::middleware::Texture2D *texture = orginTexture;
+    AttachmentVertices* attachmentVertices = (AttachmentVertices*)getRendererObject();
+    isOrigin = true;
+    attachmentVertices->_texture->release();
+    attachmentVertices->_texture = texture;
+    attachmentVertices->_texture->retain();
+    
+    if (rotate) {
+        _regionDegrees = _regionDegrees + 90;
+    }
+    _width = texture->getPixelsWide();
+    _height = texture->getPixelsHigh();
+    
+    updateUVs();
+    
+    cocos2d::middleware::V2F_T2F_C4B* vertices = attachmentVertices->_triangles->verts;
+    for (size_t i = 0, ii = 0, nn = getWorldVerticesLength(); ii < nn; ++i, ii += 2) {
+        vertices[i].texCoord.u = originUvs[ii];
+        vertices[i].texCoord.v = originUvs[ii + 1];
+    }
 }

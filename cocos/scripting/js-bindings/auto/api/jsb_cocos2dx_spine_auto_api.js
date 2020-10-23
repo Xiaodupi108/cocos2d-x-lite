@@ -3109,6 +3109,14 @@ int
 },
 
 /**
+ * @method resetTexture
+ */
+resetTexture : function (
+)
+{
+},
+
+/**
  * @method getColor
  * @return {sp.Color}
  */
@@ -3126,6 +3134,16 @@ getRegionOriginalHeight : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method updateTexture
+ * @param {cc.middleware::Texture2D} arg0
+ */
+updateTexture : function (
+texture2d 
+)
+{
 },
 
 /**
@@ -4111,6 +4129,14 @@ float
 },
 
 /**
+ * @method resetTexture
+ */
+resetTexture : function (
+)
+{
+},
+
+/**
  * @method setRegionOriginalWidth
  * @param {float} arg0
  */
@@ -4128,6 +4154,16 @@ getColor : function (
 )
 {
     return sp.Color;
+},
+
+/**
+ * @method updateTexture
+ * @param {cc.middleware::Texture2D} arg0
+ */
+updateTexture : function (
+texture2d 
+)
+{
 },
 
 /**

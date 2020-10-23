@@ -35,6 +35,8 @@
 #include <spine/Color.h>
 #include <spine/HasRendererObject.h>
 
+#include "middleware-adapter.h"
+
 namespace spine {
 	/// Attachment that displays a texture region using a mesh.
 	class SP_API MeshAttachment : public VertexAttachment, public HasRendererObject {
@@ -118,6 +120,9 @@ namespace spine {
 		virtual Attachment* copy();
 
 		MeshAttachment* newLinkedMesh();
+        
+        void updateTexture(cocos2d::middleware::Texture2D* texture);
+        void resetTexture();
 
 	private:
 		float _regionOffsetX, _regionOffsetY, _regionWidth, _regionHeight, _regionOriginalWidth, _regionOriginalHeight;
@@ -137,6 +142,11 @@ namespace spine {
 		int _hullLength;
 		bool _regionRotate;
 		int _regionDegrees;
+        
+        bool isOrigin;
+        float originRotation;
+        Vector<float> originUvs;
+        cocos2d::middleware::Texture2D *orginTexture;
 	};
 }
 

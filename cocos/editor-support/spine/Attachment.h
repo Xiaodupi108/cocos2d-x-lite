@@ -50,7 +50,8 @@ public:
 	int getRefCount();
 	void reference();
 	void dereference();
-
+    
+    bool rotate;
 private:
 	const String _name;
 	int _refCount;

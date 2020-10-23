@@ -6290,6 +6290,21 @@ static bool js_cocos2dx_spine_MeshAttachment_setHullLength(se::State& s)
 }
 SE_BIND_FUNC(js_cocos2dx_spine_MeshAttachment_setHullLength)
 
+static bool js_cocos2dx_spine_MeshAttachment_resetTexture(se::State& s)
+{
+    spine::MeshAttachment* cobj = (spine::MeshAttachment*)s.nativeThisObject();
+    SE_PRECONDITION2(cobj, false, "js_cocos2dx_spine_MeshAttachment_resetTexture : Invalid Native Object");
+    const auto& args = s.args();
+    size_t argc = args.size();
+    if (argc == 0) {
+        cobj->resetTexture();
+        return true;
+    }
+    SE_REPORT_ERROR("wrong number of arguments: %d, was expecting %d", (int)argc, 0);
+    return false;
+}
+SE_BIND_FUNC(js_cocos2dx_spine_MeshAttachment_resetTexture)
+
 static bool js_cocos2dx_spine_MeshAttachment_getColor(se::State& s)
 {
     spine::MeshAttachment* cobj = (spine::MeshAttachment*)s.nativeThisObject();
@@ -6325,6 +6340,25 @@ static bool js_cocos2dx_spine_MeshAttachment_getRegionOriginalHeight(se::State& 
     return false;
 }
 SE_BIND_FUNC(js_cocos2dx_spine_MeshAttachment_getRegionOriginalHeight)
+
+static bool js_cocos2dx_spine_MeshAttachment_updateTexture(se::State& s)
+{
+    spine::MeshAttachment* cobj = (spine::MeshAttachment*)s.nativeThisObject();
+    SE_PRECONDITION2(cobj, false, "js_cocos2dx_spine_MeshAttachment_updateTexture : Invalid Native Object");
+    const auto& args = s.args();
+    size_t argc = args.size();
+    CC_UNUSED bool ok = true;
+    if (argc == 1) {
+        cocos2d::middleware::Texture2D* arg0 = nullptr;
+        ok &= seval_to_native_ptr(args[0], &arg0);
+        SE_PRECONDITION2(ok, false, "js_cocos2dx_spine_MeshAttachment_updateTexture : Error processing arguments");
+        cobj->updateTexture(arg0);
+        return true;
+    }
+    SE_REPORT_ERROR("wrong number of arguments: %d, was expecting %d", (int)argc, 1);
+    return false;
+}
+SE_BIND_FUNC(js_cocos2dx_spine_MeshAttachment_updateTexture)
 
 static bool js_cocos2dx_spine_MeshAttachment_getEdges(se::State& s)
 {
@@ -6681,8 +6715,10 @@ bool js_register_cocos2dx_spine_MeshAttachment(se::Object* obj)
     cls->defineFunction("setPath", _SE(js_cocos2dx_spine_MeshAttachment_setPath));
     cls->defineFunction("setRegionU", _SE(js_cocos2dx_spine_MeshAttachment_setRegionU));
     cls->defineFunction("setHullLength", _SE(js_cocos2dx_spine_MeshAttachment_setHullLength));
+    cls->defineFunction("resetTexture", _SE(js_cocos2dx_spine_MeshAttachment_resetTexture));
     cls->defineFunction("getColor", _SE(js_cocos2dx_spine_MeshAttachment_getColor));
     cls->defineFunction("getRegionOriginalHeight", _SE(js_cocos2dx_spine_MeshAttachment_getRegionOriginalHeight));
+    cls->defineFunction("updateTexture", _SE(js_cocos2dx_spine_MeshAttachment_updateTexture));
     cls->defineFunction("getEdges", _SE(js_cocos2dx_spine_MeshAttachment_getEdges));
     cls->defineFunction("getRegionUVs", _SE(js_cocos2dx_spine_MeshAttachment_getRegionUVs));
     cls->defineFunction("getRegionV2", _SE(js_cocos2dx_spine_MeshAttachment_getRegionV2));
@@ -8282,6 +8318,21 @@ static bool js_cocos2dx_spine_RegionAttachment_setScaleX(se::State& s)
 }
 SE_BIND_FUNC(js_cocos2dx_spine_RegionAttachment_setScaleX)
 
+static bool js_cocos2dx_spine_RegionAttachment_resetTexture(se::State& s)
+{
+    spine::RegionAttachment* cobj = (spine::RegionAttachment*)s.nativeThisObject();
+    SE_PRECONDITION2(cobj, false, "js_cocos2dx_spine_RegionAttachment_resetTexture : Invalid Native Object");
+    const auto& args = s.args();
+    size_t argc = args.size();
+    if (argc == 0) {
+        cobj->resetTexture();
+        return true;
+    }
+    SE_REPORT_ERROR("wrong number of arguments: %d, was expecting %d", (int)argc, 0);
+    return false;
+}
+SE_BIND_FUNC(js_cocos2dx_spine_RegionAttachment_resetTexture)
+
 static bool js_cocos2dx_spine_RegionAttachment_setRegionOriginalWidth(se::State& s)
 {
     spine::RegionAttachment* cobj = (spine::RegionAttachment*)s.nativeThisObject();
@@ -8318,6 +8369,25 @@ static bool js_cocos2dx_spine_RegionAttachment_getColor(se::State& s)
     return false;
 }
 SE_BIND_FUNC(js_cocos2dx_spine_RegionAttachment_getColor)
+
+static bool js_cocos2dx_spine_RegionAttachment_updateTexture(se::State& s)
+{
+    spine::RegionAttachment* cobj = (spine::RegionAttachment*)s.nativeThisObject();
+    SE_PRECONDITION2(cobj, false, "js_cocos2dx_spine_RegionAttachment_updateTexture : Invalid Native Object");
+    const auto& args = s.args();
+    size_t argc = args.size();
+    CC_UNUSED bool ok = true;
+    if (argc == 1) {
+        cocos2d::middleware::Texture2D* arg0 = nullptr;
+        ok &= seval_to_native_ptr(args[0], &arg0);
+        SE_PRECONDITION2(ok, false, "js_cocos2dx_spine_RegionAttachment_updateTexture : Error processing arguments");
+        cobj->updateTexture(arg0);
+        return true;
+    }
+    SE_REPORT_ERROR("wrong number of arguments: %d, was expecting %d", (int)argc, 1);
+    return false;
+}
+SE_BIND_FUNC(js_cocos2dx_spine_RegionAttachment_updateTexture)
 
 static bool js_cocos2dx_spine_RegionAttachment_copy(se::State& s)
 {
@@ -8547,8 +8617,10 @@ bool js_register_cocos2dx_spine_RegionAttachment(se::Object* obj)
     cls->defineFunction("getRegionWidth", _SE(js_cocos2dx_spine_RegionAttachment_getRegionWidth));
     cls->defineFunction("setScaleY", _SE(js_cocos2dx_spine_RegionAttachment_setScaleY));
     cls->defineFunction("setScaleX", _SE(js_cocos2dx_spine_RegionAttachment_setScaleX));
+    cls->defineFunction("resetTexture", _SE(js_cocos2dx_spine_RegionAttachment_resetTexture));
     cls->defineFunction("setRegionOriginalWidth", _SE(js_cocos2dx_spine_RegionAttachment_setRegionOriginalWidth));
     cls->defineFunction("getColor", _SE(js_cocos2dx_spine_RegionAttachment_getColor));
+    cls->defineFunction("updateTexture", _SE(js_cocos2dx_spine_RegionAttachment_updateTexture));
     cls->defineFunction("copy", _SE(js_cocos2dx_spine_RegionAttachment_copy));
     cls->defineFunction("setX", _SE(js_cocos2dx_spine_RegionAttachment_setX));
     cls->defineFunction("setY", _SE(js_cocos2dx_spine_RegionAttachment_setY));

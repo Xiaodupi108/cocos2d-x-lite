@@ -36,6 +36,8 @@
 
 #include <spine/HasRendererObject.h>
 
+#include "middleware-adapter.h"
+
 #define NUM_UVS 8
 
 namespace spine {
@@ -106,7 +108,10 @@ namespace spine {
 		Vector<float>& getUVs();
 
 		virtual Attachment* copy();
-
+        
+        void updateTexture(cocos2d::middleware::Texture2D* texture);
+        void resetTexture();
+        
 	private:
 		static const int BLX;
 		static const int BLY;
@@ -127,6 +132,11 @@ namespace spine {
 		float _regionU2;
 		float _regionV2;
 		Color _color;
+        
+        bool isOrigin;
+        float originRotation;
+        Vector<float> originUvs;
+        cocos2d::middleware::Texture2D *orginTexture;
 	};
 }
 
