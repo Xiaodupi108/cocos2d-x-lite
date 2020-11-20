@@ -624,6 +624,35 @@ std::string FileUtils::getStringFromFile(const std::string& filename)
 {
     std::string s;
     getContents(filename, &s);
+//    cocos2d::log("encrypt_log getStringFromFile filename = %s", filename.c_str());
+//    Data data;
+//    data.copy(static_cast<unsigned char *>( static_cast<void *>( const_cast<char *>(s.data()))),
+//              s.size());
+//    auto bin = data.getBytes();
+//    auto size = data.getSize();
+//    unsigned char check_is_encrypt_first_flag = *bin;
+//    unsigned char check_is_encrypt_second_flag = *(bin + 1);
+//    unsigned char check_is_encrypt_third_flag = *(bin + 2);
+//    unsigned int *key = new unsigned[8]{2, 4, 8, 16, 32, 64, 128, 255};
+//    unsigned int *encrypt_key = key;
+//    unsigned int encrypt_head_lengh = 3;
+//    if (check_is_encrypt_first_flag == 0x11
+//        && check_is_encrypt_second_flag == 0x22
+//        && check_is_encrypt_third_flag == 0x33) {//需要解密
+//        cocos2d::log("encrypt_log getStringFromFile 需要解密 filename = %s", filename.c_str());
+//        auto *cur = bin + encrypt_head_lengh;
+//        auto count = size - encrypt_head_lengh;
+//        int i = 0;
+//        while (count) {
+//            *cur ^= encrypt_key[i % 8];
+//            ++cur;
+//            --count;
+//            i++;
+//        }
+//        s = static_cast<char *>( static_cast<void *>( const_cast<unsigned char *>(data.getBytes() +
+//                                                                                  encrypt_head_lengh)));
+//        cocos2d::log("encrypt_log getStringFromFileEnd filename = %s", filename.c_str());
+//    }
     return s;
 }
 

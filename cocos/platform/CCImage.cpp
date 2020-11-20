@@ -539,7 +539,32 @@ bool Image::initWithImageFile(const std::string& path)
 
     if (!data.isNull())
     {
-        ret = initWithImageData(data.getBytes(), data.getSize());
+        auto bin = data.getBytes();
+        auto size = data.getSize();
+
+        unsigned char check_is_encrypt_first_flag = *bin;
+        unsigned char check_is_encrypt_second_flag = *(bin + 1);
+        unsigned char check_is_encrypt_third_flag = *(bin + 2);
+        unsigned int *key = new unsigned[8]{2, 4, 8, 16, 32, 64, 128, 255};
+        unsigned int *encrypt_key = key;
+        unsigned int encrypt_head_lengh = 3;
+        if (check_is_encrypt_first_flag == 0x11
+            && check_is_encrypt_second_flag == 0x22
+            && check_is_encrypt_third_flag == 0x33) {
+//            cocos2d::log("encrypt_log getStringFromFile 需要解密 filename = %s", path.c_str());
+            auto *cur = bin + encrypt_head_lengh;
+            auto count = size - encrypt_head_lengh;
+            int i = 0;
+            while (count) {
+                *cur ^= encrypt_key[i % 8];
+                ++cur;
+                --count;
+                i++;
+            }
+            ret = initWithImageData(data.getBytes() + encrypt_head_lengh, data.getSize());
+        } else {
+            ret = initWithImageData(data.getBytes(), data.getSize());
+        }
     }
 
     return ret;
